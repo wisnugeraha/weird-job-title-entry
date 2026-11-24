@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Weirdest Job Title - one-line entry for make.fun [u-rusdyxbt-weirdest-job-title-blind-judge-showdown-552d7922].
 
-Writes the line to /output/entry.txt exactly once, verifies the bytes, exits 0.
+Writes the line to /output/entry.txt exactly once, verifies the bytes, reports the
+char count against the cap, exits 0.
 Gate: 1..60 chars, non-blank, UTF-8. Judge ranks lines two at a time.
 """
 import os
@@ -30,9 +31,14 @@ def confirm(out: str = OUT) -> str:
         sys.exit("confirm failed: disk content differs from LINE")
     return text
 
+def report(out: str = OUT) -> int:
+    text = confirm(out)
+    print(f"entry ok: {len(text)} chars (cap {MAX})")
+    return len(text)
+
 def main() -> None:
     emit(LINE)
-    confirm(OUT)
+    report(OUT)
 
 if __name__ == "__main__":
     main()
